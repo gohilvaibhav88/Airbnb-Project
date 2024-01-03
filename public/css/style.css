@@ -2,6 +2,7 @@
 .navbar{
     height : 5rem;
     background-color: white;
+    color: white;
 }
 
 .fa-compass{
@@ -33,13 +34,13 @@
 .f-info{
     text-align: center;
     height: 8rem;
-    background-color: #ebebeb;
+    background-color: white;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-items: space-evenly;
 }
-.card{
+.card-listing{
     border: none !important;
     margin-bottom: 2rem;
 }
@@ -69,7 +70,7 @@
 }
 .new-container{
     width: 800px; /* Adjust the width as needed */
-  padding: 20px;
+ 
 }
 .show-img{
     height: 30vh;
