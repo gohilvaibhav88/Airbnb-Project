@@ -1,85 +1,100 @@
 <% layout("/layouts/boilerplate") %>
 
-<br>
+    <br>
     <div class="row">
         <div class="col-8 offset-2">
-            <h3><%= listing.title %></h3>
+            <h3>
+                <%= listing.title %>
+            </h3>
         </div>
         <div class="card col-6 offset-2 card-listing">
-            <img src="<%= listing.image %>" alt="listing_image" class="card-img-top show-img"/>
+            <img src="<%= listing.image %>" alt="listing_image" class="card-img-top show-img" />
             <div class="card-body">
                 <p class="card-text">
-                    <%= listing.description %> <br>
-                    &#8377; <%= listing.price.toLocaleString("en-IN") %> /night <br>
-                    <%= listing.location %> <br>
-                    <%= listing.country %> <br>
+                    Owner: <i>
+                        <%= listing.owner.username %>
+                    </i></p>
+                <p>
+                    <%= listing.description %>
+                </p>
+                <p>&#8377; <%= listing.price.toLocaleString("en-IN") %> /night </p>
+                <p>
+                    <%= listing.location %>
+                </p>
+                <p>
+                    <%= listing.country %>
+                </p>
 
                 </p>
             </div>
         </div>
 
 
-        
-        <div class="btns">
-        <a class="btn btn-danger col-1 offset-2" href="/listings/<%= listing.id %>/edit">Edit</a>
-        
-        
-        <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE">
-            <button class="btn btn-dark offset-6">Delete</button>
-        </form>
-        
-    
-    </div>
+        <% if(currUser && listing.owner._id.equals(currUser._id)) { %>
+            <div class="btns">
+                <a class="btn btn-danger col-1 offset-2" href="/listings/<%= listing.id %>/edit">Edit</a>
+
+
+                <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE">
+                    <button class="btn btn-dark offset-6">Delete</button>
+                </form>
+
+
+            </div>
+        <% } %>
     </div>
     <br>
 
     <div class="new-container offset-2">
-    <hr>
-    <h4>Reviews</h4>
-    <ul>
-        <div class="row">
-            <% for (review of listing.reviews) { %>
-                <div class="col-md-6 mb-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title font-weight-bold">Vaibhav Gohil</h5>
-                            <div>
-                                <% for (let i = 1; i <= 5; i++) { %>
-                                    <% if (i <= review.rating) { %>
-                                        <i class="fa-solid fa-star" style="color: rgb(255, 213, 0)"></i>
-                                    <% } else { %>
-                                        <i class="far fa-star" style="color: rgb(255, 213, 0)"></i>
-                                    <% } %>
-                                <% } %>
+        <hr>
+        <h4>Reviews</h4>
+        <ul>
+            <div class="row">
+                <% for (review of listing.reviews) { %>
+                    <div class="col-md-6 mb-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title font-weight-bold"><%= review.author.username %></h5>
+                                <div>
+                                    <% for (let i=1; i <=5; i++) { %>
+                                        <% if (i <=review.rating) { %>
+                                            <i class="fa-solid fa-star" style="color: rgb(255, 213, 0)"></i>
+                                            <% } else { %>
+                                                <i class="far fa-star" style="color: rgb(255, 213, 0)"></i>
+                                                <% } %>
+                                                    <% } %>
+                                </div>
+                                <p class="card-text">
+                                    <%= review.comment %>
+                                </p>
                             </div>
-                            <p class="card-text"><%= review.comment %></p>
                         </div>
                     </div>
-                </div>
-            <% } %>
-        </div>
-    </ul>
-    
-    
+                    <% } %>
+            </div>
+        </ul>
 
-</div>
-    
-    
+
+
+    </div>
+
+
     <div class="new-container offset-2">
         <hr>
-        <h4>Review this Hotel</h4>
-        <form action="/listings/<%= listing.id %>/reviews" method="POST" >
-            <div>
-                <label for="rating" class="form-label"> Rating</label>
-                <input type="range" min="1" max="5" id="rating" name="review[rating]" class="form-range">
-            </div>
-            <br>
-            <div>
-                <label for="comment" class="form-label">Comment</label>
-                <textarea name="review[comment]" id="comment" cols="30" rows="7" class="form-control"></textarea>
-            </div>
-            <br>
-            <button class="btn btn-dark">Submit</button>
-        </form>
+        <% if(currUser) { %>
+            <h4>Review this Hotel</h4>
+            <form action="/listings/<%= listing.id %>/reviews" method="POST">
+                <div>
+                    <label for="rating" class="form-label"> Rating</label>
+                    <input type="range" min="1" max="5" id="rating" name="review[rating]" class="form-range">
+                </div>
+                <br>
+                <div>
+                    <label for="comment" class="form-label">Comment</label>
+                    <textarea name="review[comment]" id="comment" cols="30" rows="7" class="form-control"></textarea>
+                </div>
+                <br>
+                <button class="btn btn-dark">Submit</button>
+            </form>
+            <% } %>
     </div>
-    
