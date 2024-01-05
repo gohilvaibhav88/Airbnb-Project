@@ -1,9 +1,11 @@
 <% layout("/layouts/boilerplate") %>
-<br>
-    <h3>Create a New Listing</h3>
 
-    <div class="new-container">
-        <form method="POST" action="/listings" class="needs-validation" novalidate>
+    
+
+    <div class="new-container offset-2">
+      <h3>Create a New Listing</h3>
+      <br>
+        <form method="POST" action="/listings" class="needs-validation" enctype="multipart/form-data" novalidate>
 
             <div>
                 <label for="title" class="form-label">Title</label>
@@ -28,10 +30,11 @@
                   </div>
             </div>
             <br/>
+            
             <div>
-                <label for="image" class="form-label">Image Url</label>
-                <input type="text" name="listing[image]" placeholder="Provide the image URL " class="form-control">
-            </div>
+              <label for="image" class="form-label">Upload Image Of your Place</label>
+              <input type="file" name="listing[image]"  class="form-control">
+          </div>
             
             <br/>
             <div>
