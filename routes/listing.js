@@ -25,11 +25,11 @@ const validateListing = (req, res , next )=>{
     }
 }
 
-router.post('/', upload.single('listing[image]'), (req, res) => {
-    res.send(req.file );
-});
+router.post('/',isLoggedIn, upload.single('listing[image]'),validateListing ,  wrapAsync (listingController.create));
 //index route
 router.get("/", wrapAsync (listingController.index));
+
+
 
 //new route
 router.get("/new", isLoggedIn ,(listingController.newListings));
@@ -46,7 +46,7 @@ router.post("/", validateListing  ,wrapAsync(listingController.create));
 router.get("/:id/edit" , isLoggedIn, isOwner  ,wrapAsync((listingController.editListing)));
 
 //update
-router.put("/:id", validateListing, isLoggedIn , isOwner ,wrapAsync(listingController.updateListing));
+router.put("/:id",  isLoggedIn , isOwner, upload.single("listing[image]"), validateListing, wrapAsync(listingController.updateListing));
 
 //delete
 router.delete('/:id', isLoggedIn , isOwner ,wrapAsync(listingController.deleteListing));

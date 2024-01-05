@@ -79,3 +79,22 @@
 .btns{
     display: flex;
 }
+.img-url{
+    height: 200px;
+    width: 250px;
+    
+}
+.signup-btn{
+    
+    border-radius: 8px ;
+}
+
+.signup-link :hover{
+    text-decoration: underline;
+}
+.login-link :hover{
+    text-decoration: underline;
+}
+.logout-link :hover{
+    text-decoration: underline;
+}

@@ -62,9 +62,6 @@ async function main(){
 }
  
 
-app.get("/", function(req, res){
-    res.send("Hello World");
-}) 
 
 
 app.use(session(sessionOptions));

@@ -1,9 +1,12 @@
 const Listing = require('../models/listing')
 
 module.exports.create = async (req, res, next) => {
+    let url = req.file.path;
+    let filename = req.file.filename;
     
     const newListing = new Listing(req.body.listing);
     newListing.owner  = req.user._id;
+    newListing.image = {url , filename}
     await newListing.save();
     req.flash("success", "New Listing was Created");
     res.redirect("/listings");
@@ -40,7 +43,17 @@ module.exports.editListing = async function(req, res, next) {
 module.exports.updateListing = (async function(req, res, next) {
    
     let { id } = req.params;
-     await Listing.findByIdAndUpdate(id, { ...req.body.listing });
+    let listing = await Listing.findByIdAndUpdate(id, { ...req.body.listing });
+
+    
+
+    if(typeof req.file !== "undefined"){
+        let url = req.file.path;
+        let filename = req.file.filename;
+    listing.image = {url , filename};
+    await listing.save();
+    }
+
     req.flash("success", "Listing was Updated");
     res.redirect(`/listings/${id}`);  
 })
